@@ -1,6 +1,7 @@
 package bot
 
 import (
+	guessnumber "bot/bot/guess_number"
 	"bot/bot/photo2ascii"
 	"bot/bot/randomizer"
 	"bot/structs"
@@ -26,15 +27,15 @@ func Run(conf structs.Conf,agents []string) {
         sess.AddHandler(func (s *discordgo.Session, m *discordgo.MessageCreate)  {
 
 			//log.Println(m.ChannelID)
-
-			if m.ChannelID == "995790861126344926" {
-				randomizer.Get_Random_Agent(s,m,agents)
-			}else if m.ChannelID == "1196503435676221571" {
-				if m.Author.ID != "930498017948209293"{
+			if m.Author.ID != "930498017948209293"{
+				if m.ChannelID == "995790861126344926" {
+					randomizer.Get_Random_Agent(s,m,agents)
+				}else if m.ChannelID == "1196503435676221571" {
 					photo2ascii.ConvertPhoto2Ascii(s,m)
+				}else if m.ChannelID == "994743377436348459"{
+					guessnumber.Start(s,m)
 				}
 			}
-			
         })
 
         err = sess.Open()
