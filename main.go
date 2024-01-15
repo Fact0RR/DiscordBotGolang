@@ -1,6 +1,9 @@
 package main
 
 import (
+	"bot/bot"
+	"bot/structs"
+	valorantagents "bot/valorant_agents"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -18,9 +21,11 @@ func main() {
 	
 	byteValue, _ := io.ReadAll(jsonFile)
 
-	var conf Conf
+	var conf structs.Conf
 
 	json.Unmarshal(byteValue, &conf)
 
-	fmt.Println(conf.Token)
+	agents := valorantagents.Get_Agents()
+
+	bot.Run(conf,agents)
 }

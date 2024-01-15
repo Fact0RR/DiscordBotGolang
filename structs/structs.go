@@ -1,4 +1,4 @@
-package main
+package structs
 
 type Conf struct {
     Type string `json:"type"`
