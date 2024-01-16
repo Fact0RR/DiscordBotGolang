@@ -4,6 +4,7 @@ import (
 	guessnumber "bot/bot/guess_number"
 	"bot/bot/photo2ascii"
 	"bot/bot/randomizer"
+	"bot/bot/saper"
 	"bot/structs"
 
 	"log"
@@ -14,11 +15,12 @@ import (
 	"github.com/bwmarrin/discordgo"
 )
 
-
-
+//var saperChan chan string
 
 func Run(conf structs.Conf,agents []string) {
 
+	saperChan := make(chan string)
+	
 	sess, err:= discordgo.New(conf.Type+" "+conf.Token)
         if err != nil{
                 log.Fatal(err)
@@ -34,6 +36,8 @@ func Run(conf structs.Conf,agents []string) {
 					photo2ascii.ConvertPhoto2Ascii(s,m)
 				}else if m.ChannelID == "994743377436348459"{
 					guessnumber.Start(s,m)
+				}else if m.ChannelID == "994358214831378482"{
+					saper.Controller(s,m,saperChan)
 				}
 			}
         })
